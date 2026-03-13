@@ -6,24 +6,21 @@
 <title>Admin — IEMELIF Songbook</title>
 <link rel="stylesheet" href="css/style.css">
 <style>
-/* ── ADMIN SPECIFIC ─────────────────────────────────── */
 .admin-wrapper {
-  max-width:900px; margin:0 auto; padding:24px 20px 60px;
+  max-width:940px; margin:0 auto; padding:24px 20px 80px;
 }
 
-/* Login overlay */
+/* Login */
 .login-overlay {
   position:fixed; inset:0; z-index:500;
-  background:rgba(26,0,16,0.88); backdrop-filter:blur(10px);
+  background:rgba(26,0,16,0.92); backdrop-filter:blur(12px);
   display:flex; align-items:center; justify-content:center;
 }
 .login-box {
-  width:100%; max-width:380px;
-  padding:44px 40px;
+  width:100%; max-width:380px; padding:44px 40px;
   background:rgba(255,255,255,0.12);
-  border:1px solid rgba(212,160,23,0.35);
-  border-radius:24px; backdrop-filter:blur(22px);
-  text-align:center;
+  border:1px solid rgba(212,160,23,0.40);
+  border-radius:24px; backdrop-filter:blur(22px); text-align:center;
 }
 .login-box h2 {
   font-family:'Cinzel',serif; font-size:1.4rem; letter-spacing:0.1em;
@@ -37,172 +34,174 @@
   width:100%; padding:13px 18px;
   background:rgba(255,255,255,0.10);
   border:1px solid rgba(212,160,23,0.35);
-  border-radius:10px; color:white;
-  font-size:1rem; font-family:inherit;
-  text-align:center; letter-spacing:0.1em;
-  margin-bottom:16px; outline:none;
+  border-radius:10px; color:white; font-size:1rem; font-family:inherit;
+  text-align:center; letter-spacing:0.1em; margin-bottom:16px; outline:none;
   transition:all 0.3s ease;
 }
 .login-box input:focus { border-color:rgba(212,160,23,0.7); background:rgba(255,255,255,0.16); }
-.login-error { color:#f48fb1; font-size:0.85rem; margin-top:8px; display:none; }
+.login-error { color:#f48fb1; font-size:0.85rem; margin-top:10px; display:none; }
 
-/* Section headers */
-.admin-section {
-  margin-bottom:32px;
+/* Export Banner */
+.export-banner {
+  padding:22px 28px;
+  background:linear-gradient(135deg, rgba(212,160,23,0.15), rgba(194,24,91,0.10));
+  border:1px solid rgba(212,160,23,0.45);
+  border-radius:16px; margin-bottom:28px;
 }
+.export-banner h3 {
+  font-family:'Cinzel',serif; font-size:0.90rem; letter-spacing:0.10em;
+  color:var(--gold-shine); margin-bottom:14px;
+}
+.export-steps {
+  display:flex; align-items:stretch; gap:6px; flex-wrap:wrap; margin-bottom:16px;
+}
+.step {
+  flex:1; min-width:130px;
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:10px; padding:12px 14px; text-align:center;
+}
+.step-num {
+  font-family:'Cinzel',serif; font-size:0.62rem; letter-spacing:0.14em;
+  color:var(--gold-mid); margin-bottom:5px;
+}
+.step-text {
+  font-family:'Cormorant Garamond',serif; font-size:0.88rem; font-style:italic;
+  color:rgba(255,255,255,0.75); line-height:1.4;
+}
+.step-arrow { display:flex; align-items:center; color:rgba(212,160,23,0.5); font-size:1.1rem; }
+.export-actions { display:flex; gap:10px; flex-wrap:wrap; }
+
+/* Section */
+.admin-section { margin-bottom:26px; }
 .admin-section-title {
-  font-family:'Cinzel',serif; font-size:0.88rem; letter-spacing:0.14em;
+  font-family:'Cinzel',serif; font-size:0.84rem; letter-spacing:0.14em;
   color:var(--gold-mid); text-transform:uppercase;
-  margin-bottom:16px; padding-bottom:8px;
+  margin-bottom:14px; padding-bottom:8px;
   border-bottom:1px solid rgba(212,160,23,0.25);
-  display:flex; align-items:center; justify-content:space-between;
+  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;
 }
 
 /* Song tabs */
-.song-tabs {
-  display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px;
-}
+.song-tabs { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px; }
 .song-tab {
-  padding:9px 18px; border-radius:30px;
+  padding:9px 16px; border-radius:30px;
   border:1px solid rgba(255,255,255,0.20);
   background:rgba(255,255,255,0.09); color:rgba(255,255,255,0.70);
   cursor:pointer; font-family:'Cinzel',serif; font-size:0.72rem; letter-spacing:0.08em;
   transition:all 0.25s ease; user-select:none;
+  display:flex; align-items:center; gap:8px;
 }
-.song-tab.active {
-  background:rgba(212,160,23,0.22); border-color:rgba(212,160,23,0.55);
-  color:var(--gold-shine);
+.song-tab.active { background:rgba(212,160,23,0.22); border-color:rgba(212,160,23,0.55); color:var(--gold-shine); }
+.song-tab:hover:not(.active) { background:rgba(255,255,255,0.14); color:white; }
+.tab-del {
+  width:16px; height:16px; border-radius:50%;
+  background:rgba(194,24,91,0.30); color:#f48fb1;
+  border:none; cursor:pointer; font-size:0.62rem;
+  display:inline-flex; align-items:center; justify-content:center;
+  transition:background 0.2s; flex-shrink:0;
 }
-.song-tab:hover:not(.active) { background:rgba(255,255,255,0.15); color:white; }
+.tab-del:hover { background:rgba(194,24,91,0.60); }
 
-/* Form fields */
-.form-row {
-  display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px;
-}
-.form-row.full { grid-template-columns:1fr; }
+/* Form */
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px; }
 .form-group label {
-  display:block; font-family:'Cinzel',serif; font-size:0.70rem; letter-spacing:0.1em;
-  color:rgba(255,255,255,0.60); margin-bottom:6px; text-transform:uppercase;
+  display:block; font-family:'Cinzel',serif; font-size:0.68rem; letter-spacing:0.1em;
+  color:rgba(255,255,255,0.52); margin-bottom:6px; text-transform:uppercase;
 }
 .form-group input, .form-group select {
   width:100%; padding:11px 14px;
-  background:rgba(255,255,255,0.09);
-  border:1px solid rgba(255,255,255,0.20);
-  border-radius:10px; color:white;
-  font-size:0.95rem; font-family:'Cormorant Garamond',serif;
-  outline:none; transition:all 0.3s ease;
+  background:rgba(255,255,255,0.09); border:1px solid rgba(255,255,255,0.19);
+  border-radius:10px; color:white; font-size:0.95rem;
+  font-family:'Cormorant Garamond',serif; outline:none; transition:all 0.3s ease;
 }
 .form-group input:focus, .form-group select:focus {
-  border-color:rgba(212,160,23,0.55);
-  background:rgba(255,255,255,0.13);
+  border-color:rgba(212,160,23,0.55); background:rgba(255,255,255,0.13);
 }
 .form-group select option { background:#3d0028; color:white; }
 
-/* Verses editor */
-.verses-editor { display:flex; flex-direction:column; gap:16px; }
+/* Verses */
+.verses-editor { display:flex; flex-direction:column; gap:14px; }
 .verse-editor {
-  background:rgba(255,255,255,0.07);
-  border:1px solid rgba(255,255,255,0.14);
-  border-radius:14px; padding:20px;
-  position:relative;
+  background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);
+  border-radius:14px; padding:18px 20px;
 }
-.verse-editor-header {
-  display:flex; align-items:center; gap:10px; margin-bottom:14px;
-  flex-wrap:wrap;
-}
+.verse-editor-header { display:flex; align-items:center; gap:10px; margin-bottom:12px; flex-wrap:wrap; }
 .verse-type-select {
-  flex:1; min-width:140px;
-  padding:8px 12px;
-  background:rgba(255,255,255,0.09);
-  border:1px solid rgba(212,160,23,0.30);
+  flex:1; min-width:130px; padding:8px 12px;
+  background:rgba(255,255,255,0.09); border:1px solid rgba(212,160,23,0.28);
   border-radius:8px; color:var(--gold-shine);
-  font-family:'Cinzel',serif; font-size:0.72rem; letter-spacing:0.08em;
-  outline:none;
+  font-family:'Cinzel',serif; font-size:0.72rem; letter-spacing:0.08em; outline:none;
 }
 .verse-type-select option { background:#3d0028; color:white; }
 .remove-verse-btn {
   padding:6px 14px; border-radius:20px;
-  border:1px solid rgba(194,24,91,0.40);
-  background:rgba(194,24,91,0.12); color:#f48fb1;
-  cursor:pointer; font-size:0.72rem; font-family:'Cinzel',serif;
+  border:1px solid rgba(194,24,91,0.38);
+  background:rgba(194,24,91,0.10); color:#f48fb1;
+  cursor:pointer; font-size:0.70rem; font-family:'Cinzel',serif;
   letter-spacing:0.06em; transition:all 0.25s ease;
 }
-.remove-verse-btn:hover { background:rgba(194,24,91,0.25); }
+.remove-verse-btn:hover { background:rgba(194,24,91,0.26); }
 
-/* Lines editor */
-.lines-editor { display:flex; flex-direction:column; gap:8px; }
+.lines-editor { display:flex; flex-direction:column; gap:7px; }
 .line-row {
   display:grid; grid-template-columns:1fr 1fr; gap:8px; align-items:start;
-  background:rgba(255,255,255,0.04);
-  border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:10px 12px;
-  position:relative;
+  background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);
+  border-radius:8px; padding:10px 12px; position:relative;
 }
 .line-row label {
-  font-family:'Cinzel',serif; font-size:0.62rem; letter-spacing:0.1em;
-  color:rgba(255,255,255,0.45); margin-bottom:4px; display:block;
-  text-transform:uppercase;
+  font-family:'Cinzel',serif; font-size:0.60rem; letter-spacing:0.10em;
+  color:rgba(255,255,255,0.38); margin-bottom:4px; display:block; text-transform:uppercase;
 }
 .line-row input {
-  width:100%; padding:8px 10px;
-  background:rgba(255,255,255,0.07);
-  border:1px solid rgba(255,255,255,0.14);
-  border-radius:6px; color:white;
-  font-size:0.88rem; outline:none;
-  transition:border-color 0.2s;
+  width:100%; padding:7px 10px;
+  background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12);
+  border-radius:6px; color:white; font-size:0.88rem; outline:none; transition:border-color 0.2s;
 }
-.line-row input:focus { border-color:rgba(212,160,23,0.50); }
-.chord-input { font-family:'Lato',sans-serif; color:var(--gold-shine) !important; }
-.lyric-input { font-family:'Cormorant Garamond',serif; }
+.line-row input:focus { border-color:rgba(212,160,23,0.48); }
+.chord-input { font-family:'Lato',sans-serif !important; color:var(--gold-shine) !important; }
+.lyric-input { font-family:'Cormorant Garamond',serif !important; }
 .remove-line-btn {
   position:absolute; top:6px; right:6px;
-  width:20px;height:20px; border-radius:50%;
-  border:none; background:rgba(194,24,91,0.25); color:#f48fb1;
-  cursor:pointer; font-size:0.75rem; line-height:1;
-  display:flex;align-items:center;justify-content:center;
-  transition:background 0.2s;
+  width:20px; height:20px; border-radius:50%;
+  border:none; background:rgba(194,24,91,0.20); color:#f48fb1;
+  cursor:pointer; font-size:0.70rem;
+  display:flex; align-items:center; justify-content:center; transition:background 0.2s;
 }
-.remove-line-btn:hover{ background:rgba(194,24,91,0.45); }
-
+.remove-line-btn:hover { background:rgba(194,24,91,0.44); }
 .add-line-btn {
   padding:7px 16px; border-radius:20px;
-  border:1px dashed rgba(255,255,255,0.25);
-  background:transparent; color:rgba(255,255,255,0.55);
-  cursor:pointer; font-size:0.75rem; width:100%;
-  margin-top:6px; font-family:'Cinzel',serif; letter-spacing:0.08em;
-  transition:all 0.2s ease;
+  border:1px dashed rgba(255,255,255,0.20);
+  background:transparent; color:rgba(255,255,255,0.46);
+  cursor:pointer; font-size:0.72rem; width:100%; margin-top:5px;
+  font-family:'Cinzel',serif; letter-spacing:0.08em; transition:all 0.2s ease;
 }
-.add-line-btn:hover { border-color:rgba(212,160,23,0.45); color:var(--gold-shine); }
-
+.add-line-btn:hover { border-color:rgba(212,160,23,0.44); color:var(--gold-shine); }
 .add-verse-btn {
   padding:10px 22px; border-radius:30px;
-  border:1px dashed rgba(212,160,23,0.40);
-  background:rgba(212,160,23,0.06); color:rgba(212,160,23,0.80);
-  cursor:pointer; font-family:'Cinzel',serif; font-size:0.74rem; letter-spacing:0.1em;
-  transition:all 0.25s ease; width:100%; margin-top:4px;
+  border:1px dashed rgba(212,160,23,0.38);
+  background:rgba(212,160,23,0.05); color:rgba(212,160,23,0.78);
+  cursor:pointer; font-family:'Cinzel',serif; font-size:0.73rem; letter-spacing:0.10em;
+  transition:all 0.25s ease; width:100%; margin-top:6px;
 }
-.add-verse-btn:hover { background:rgba(212,160,23,0.15); color:var(--gold-shine); border-style:solid; }
+.add-verse-btn:hover { background:rgba(212,160,23,0.14); color:var(--gold-shine); border-style:solid; }
 
-/* Preview pane */
+/* Preview */
 .preview-panel {
-  background:rgba(255,255,255,0.08);
-  border:1px solid rgba(255,255,255,0.15);
+  background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.13);
   border-radius:14px; padding:24px 28px;
-  margin-top:20px;
 }
-.preview-title {
-  font-family:'Cinzel',serif; font-size:0.72rem; letter-spacing:0.14em;
-  color:var(--gold-mid); margin-bottom:14px; text-transform:uppercase;
+.preview-label {
+  font-family:'Cinzel',serif; font-size:0.68rem; letter-spacing:0.14em;
+  color:var(--gold-mid); text-transform:uppercase; margin-bottom:14px;
   display:flex; align-items:center; gap:10px;
 }
-.preview-title::after {
-  content:''; flex:1; height:1px;
-  background:linear-gradient(90deg, rgba(212,160,23,0.3), transparent);
-}
-.verse-block{ margin-bottom:22px; }
+.preview-label::after { content:''; flex:1; height:1px; background:linear-gradient(90deg,rgba(212,160,23,0.28),transparent); }
+.verse-block { margin-bottom:22px; }
 .verse-label {
-  font-family:'Cinzel',serif; font-size:0.66rem; letter-spacing:0.16em;
+  font-family:'Cinzel',serif; font-size:0.64rem; letter-spacing:0.16em;
   color:var(--gold-mid); text-transform:uppercase; margin-bottom:8px;
-  padding-bottom:4px; border-bottom:1px solid rgba(212,160,23,0.20);
+  padding-bottom:4px; border-bottom:1px solid rgba(212,160,23,0.18);
 }
 .chord-row {
   font-family:'Lato',sans-serif; font-size:0.82rem; font-weight:700;
@@ -210,28 +209,47 @@
 }
 .lyric-row {
   font-family:'Cormorant Garamond',serif; font-size:1rem;
-  color:rgba(255,255,255,0.85); white-space:pre-wrap;
-  padding:1px 0; margin-bottom:5px;
+  color:rgba(255,255,255,0.85); white-space:pre-wrap; padding:1px 0; margin-bottom:5px;
 }
 
 /* Save bar */
 .save-bar {
-  position:sticky; bottom:0;
-  padding:14px 0; margin-top:20px;
-  background:linear-gradient(transparent, rgba(26,0,16,0.9));
-  display:flex; gap:10px; justify-content:flex-end; align-items:center;
+  position:sticky; bottom:0; padding:14px 0; margin-top:16px;
+  background:linear-gradient(transparent, rgba(26,0,16,0.96));
+  display:flex; gap:10px; justify-content:flex-end; align-items:center; flex-wrap:wrap;
 }
 .save-status {
   font-family:'Cormorant Garamond',serif; font-style:italic;
-  font-size:0.9rem; color:rgba(255,255,255,0.55); margin-right:auto;
+  font-size:0.88rem; color:rgba(255,255,255,0.46); margin-right:auto;
 }
-.save-status.ok { color:#a5d6a7; }
+.save-status.ok  { color:#a5d6a7; }
 .save-status.err { color:#f48fb1; }
+
+/* Add song modal */
+.modal-overlay {
+  position:fixed; inset:0; z-index:600;
+  background:rgba(26,0,16,0.90); backdrop-filter:blur(10px);
+  display:none; align-items:center; justify-content:center;
+}
+.modal-overlay.open { display:flex; }
+.modal-box {
+  width:100%; max-width:440px; padding:36px 36px 28px;
+  background:rgba(40,0,24,0.96); border:1px solid rgba(212,160,23,0.42);
+  border-radius:20px; backdrop-filter:blur(22px);
+}
+.modal-box h3 {
+  font-family:'Cinzel',serif; font-size:1.1rem; letter-spacing:0.08em;
+  color:var(--gold-shine); margin-bottom:20px;
+}
+.modal-box .form-group { margin-bottom:14px; }
+.modal-actions { display:flex; gap:10px; justify-content:flex-end; margin-top:20px; }
 
 @media(max-width:600px){
   .form-row { grid-template-columns:1fr; }
-  .line-row { grid-template-columns:1fr; }
-  .login-box { padding:32px 24px; }
+  .line-row  { grid-template-columns:1fr; }
+  .step-arrow { display:none; }
+  .export-steps { flex-direction:column; }
+  .login-box { padding:30px 22px; }
 }
 </style>
 </head>
@@ -242,17 +260,48 @@
   <div class="shape"></div><div class="shape"></div>
 </div>
 
-<!-- LOGIN OVERLAY -->
+<!-- LOGIN -->
 <div class="login-overlay" id="loginOverlay">
   <div class="login-box glass">
-    <div style="font-size:2.5rem;margin-bottom:12px;">🎵</div>
+    <div style="font-size:2.4rem;margin-bottom:12px;">✞</div>
     <h2>Admin Access</h2>
     <p>Enter the admin password to manage the songbook</p>
     <input type="password" id="pwInput" placeholder="Password" autocomplete="current-password">
-    <br>
-    <button class="btn btn-gold" onclick="tryLogin()" style="width:100%;justify-content:center;">Unlock ✦</button>
+    <button class="btn btn-gold" onclick="tryLogin()" style="width:100%;justify-content:center;margin-top:4px;">Unlock ✦</button>
     <div class="login-error" id="loginError">Incorrect password. Try again.</div>
-    <p style="margin-top:20px;font-size:0.78rem;color:rgba(255,255,255,0.35);">Default password: <code style="color:var(--gold-mid);">iemelif98</code></p>
+    <p style="margin-top:20px;font-size:0.74rem;color:rgba(255,255,255,0.28);">Default password: <code style="color:var(--gold-mid);">iemelif98</code></p>
+  </div>
+</div>
+
+<!-- ADD SONG MODAL -->
+<div class="modal-overlay" id="addSongModal">
+  <div class="modal-box">
+    <h3>✦ Add New Song</h3>
+    <div class="form-group">
+      <label>Song Title *</label>
+      <input type="text" id="newTitle" placeholder="e.g. Amazing Grace">
+    </div>
+    <div class="form-group">
+      <label>Author / Composer</label>
+      <input type="text" id="newAuthor" placeholder="e.g. John Newton">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Time Signature</label>
+        <select id="newTime">
+          <option>4/4</option><option>3/4</option><option>6/8</option>
+          <option>2/4</option><option>2/2</option><option>12/8</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Tempo</label>
+        <input type="text" id="newTempo" placeholder="e.g. ♩ = 80">
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-glass btn-sm" onclick="closeAddModal()">Cancel</button>
+      <button class="btn btn-gold btn-sm" onclick="confirmAddSong()">Add Song ✦</button>
+    </div>
   </div>
 </div>
 
@@ -273,71 +322,104 @@
 </header>
 
 <main>
-  <div class="admin-wrapper">
-    <div class="page-banner">
-      <h1>Admin Panel</h1>
-      <p class="subtitle">Manage songs, lyrics & chords</p>
-    </div>
+<div class="admin-wrapper">
 
-    <!-- SONG SELECTOR TABS -->
-    <div class="admin-section">
-      <div class="admin-section-title">
-        <span>Select Song to Edit</span>
-        <button class="btn btn-sm btn-glass" onclick="lockAdmin()">🔒 Lock</button>
-      </div>
-      <div class="song-tabs" id="songTabs"></div>
-    </div>
+  <div class="page-banner">
+    <h1>Admin Panel</h1>
+    <p class="subtitle">Manage songs, lyrics &amp; chords</p>
+  </div>
 
-    <!-- SONG METADATA -->
-    <div class="admin-section">
-      <div class="admin-section-title">Song Information</div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>Song Title</label>
-          <input type="text" id="fTitle" placeholder="e.g. Amazing Grace">
-        </div>
-        <div class="form-group">
-          <label>Author / Composer</label>
-          <input type="text" id="fAuthor" placeholder="e.g. John Newton">
-        </div>
+  <!-- EXPORT WORKFLOW BANNER -->
+  <div class="export-banner">
+    <h3>📤 How to sync changes to ALL devices</h3>
+    <div class="export-steps">
+      <div class="step">
+        <div class="step-num">STEP 1</div>
+        <div class="step-text">Edit &amp; Save your songs below</div>
       </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>Time Signature</label>
-          <select id="fTime">
-            <option>4/4</option><option>3/4</option><option>6/8</option>
-            <option>2/4</option><option>2/2</option><option>12/8</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Tempo</label>
-          <input type="text" id="fTempo" placeholder="e.g. ♩ = 80">
-        </div>
+      <div class="step-arrow">→</div>
+      <div class="step">
+        <div class="step-num">STEP 2</div>
+        <div class="step-text">Click <strong style="color:var(--gold-shine)">Export utils.js</strong> button</div>
+      </div>
+      <div class="step-arrow">→</div>
+      <div class="step">
+        <div class="step-num">STEP 3</div>
+        <div class="step-text">Replace <code style="color:var(--gold-shine)">js/utils.js</code> in your folder with the downloaded file</div>
+      </div>
+      <div class="step-arrow">→</div>
+      <div class="step">
+        <div class="step-num">STEP 4</div>
+        <div class="step-text">Redeploy the whole folder to Netlify</div>
       </div>
     </div>
-
-    <!-- VERSES EDITOR -->
-    <div class="admin-section">
-      <div class="admin-section-title">Lyrics & Chords</div>
-      <div class="verses-editor" id="versesEditor"></div>
-      <button class="add-verse-btn" onclick="addVerse()">+ Add Section (Verse / Chorus / Bridge…)</button>
-    </div>
-
-    <!-- LIVE PREVIEW -->
-    <div class="admin-section">
-      <div class="admin-section-title">Live Preview</div>
-      <div class="preview-panel" id="previewPanel">
-        <div class="preview-title">Preview</div>
-        <div id="previewContent"></div>
-      </div>
-    </div>
-
-    <div class="save-bar">
-      <span class="save-status" id="saveStatus"></span>
-      <button class="btn btn-glass btn-sm" onclick="revertSong()">Revert</button>
-      <button class="btn btn-gold" onclick="saveSong()">💾 Save Changes</button>
+    <div class="export-actions">
+      <button class="btn btn-gold" onclick="exportUtils()">📥 Export utils.js</button>
+      <button class="btn btn-glass btn-sm" onclick="lockAdmin()">🔒 Lock</button>
     </div>
   </div>
+
+  <!-- SONGS -->
+  <div class="admin-section">
+    <div class="admin-section-title">
+      <span>Songs</span>
+      <button class="btn btn-pink btn-sm" onclick="openAddModal()">+ Add Song</button>
+    </div>
+    <div class="song-tabs" id="songTabs"></div>
+  </div>
+
+  <!-- METADATA -->
+  <div class="admin-section">
+    <div class="admin-section-title">Song Information</div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Song Title</label>
+        <input type="text" id="fTitle" placeholder="e.g. Amazing Grace">
+      </div>
+      <div class="form-group">
+        <label>Author / Composer</label>
+        <input type="text" id="fAuthor" placeholder="e.g. John Newton">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Time Signature</label>
+        <select id="fTime">
+          <option>4/4</option><option>3/4</option><option>6/8</option>
+          <option>2/4</option><option>2/2</option><option>12/8</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Tempo</label>
+        <input type="text" id="fTempo" placeholder="e.g. ♩ = 80">
+      </div>
+    </div>
+  </div>
+
+  <!-- VERSES -->
+  <div class="admin-section">
+    <div class="admin-section-title">Lyrics &amp; Chords</div>
+    <div class="verses-editor" id="versesEditor"></div>
+    <button class="add-verse-btn" onclick="addVerse()">+ Add Section (Verse / Chorus / Bridge…)</button>
+  </div>
+
+  <!-- PREVIEW -->
+  <div class="admin-section">
+    <div class="admin-section-title">Live Preview</div>
+    <div class="preview-panel">
+      <div class="preview-label">Preview</div>
+      <div id="previewContent"></div>
+    </div>
+  </div>
+
+  <div class="save-bar">
+    <span class="save-status" id="saveStatus"></span>
+    <button class="btn btn-glass btn-sm" onclick="revertSong()">↩ Revert</button>
+    <button class="btn btn-gold" onclick="saveSong()">💾 Save Song</button>
+    <button class="btn btn-pink" onclick="exportUtils()">📥 Export utils.js</button>
+  </div>
+
+</div>
 </main>
 
 <footer>
@@ -349,7 +431,7 @@
 const ADMIN_PASSWORD = 'iemelif98';
 let songs = [];
 let activeSongIdx = 0;
-let editingVerses = []; // deep copy being edited
+let editingVerses = [];
 
 // ── Auth ──────────────────────────────────────────────
 function tryLogin() {
@@ -364,10 +446,7 @@ function tryLogin() {
     setTimeout(() => err.style.display = 'none', 3000);
   }
 }
-document.getElementById('pwInput').addEventListener('keydown', e => {
-  if (e.key === 'Enter') tryLogin();
-});
-
+document.getElementById('pwInput').addEventListener('keydown', e => { if (e.key==='Enter') tryLogin(); });
 function lockAdmin() {
   document.getElementById('loginOverlay').style.display = 'flex';
   document.getElementById('pwInput').value = '';
@@ -376,157 +455,271 @@ function lockAdmin() {
 // ── Init ──────────────────────────────────────────────
 function initAdmin() {
   songs = loadSongs();
+  activeSongIdx = 0;
   renderTabs();
-  loadSongIntoEditor(activeSongIdx);
+  loadSongIntoEditor(0);
 }
 
+// ── Tabs ──────────────────────────────────────────────
 function renderTabs() {
-  const tabs = document.getElementById('songTabs');
-  tabs.innerHTML = songs.map((song, i) => `
-    <div class="song-tab${i === activeSongIdx ? ' active' : ''}" onclick="switchSong(${i})">
-      ${String(i+1).padStart(2,'0')}. ${song.title}
-    </div>
-  `).join('');
+  document.getElementById('songTabs').innerHTML = songs.map((s, i) => `
+    <div class="song-tab${i===activeSongIdx?' active':''}" onclick="switchSong(${i})">
+      <span>${String(i+1).padStart(2,'0')}. ${s.title}</span>
+      ${songs.length > 1
+        ? `<button class="tab-del" onclick="event.stopPropagation();deleteSong(${i})" title="Delete">✕</button>`
+        : ''}
+    </div>`).join('');
 }
 
 function switchSong(idx) {
+  collectCurrentEdits();
   activeSongIdx = idx;
   renderTabs();
   loadSongIntoEditor(idx);
 }
 
-// ── Load song into form ────────────────────────────────
+// ── Add Song ──────────────────────────────────────────
+function openAddModal() {
+  ['newTitle','newAuthor','newTempo'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('newTime').value = '4/4';
+  document.getElementById('addSongModal').classList.add('open');
+  setTimeout(() => document.getElementById('newTitle').focus(), 100);
+}
+function closeAddModal() { document.getElementById('addSongModal').classList.remove('open'); }
+document.getElementById('addSongModal').addEventListener('click', e => { if(e.target===e.currentTarget) closeAddModal(); });
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeAddModal(); });
+
+function confirmAddSong() {
+  const title = document.getElementById('newTitle').value.trim();
+  if (!title) {
+    document.getElementById('newTitle').style.borderColor = '#f48fb1';
+    setTimeout(() => document.getElementById('newTitle').style.borderColor = '', 2000);
+    return;
+  }
+  const maxId = songs.reduce((m,s) => Math.max(m,s.id), 0);
+  songs.push({
+    id: maxId + 1,
+    title,
+    author: document.getElementById('newAuthor').value.trim(),
+    timeSignature: document.getElementById('newTime').value,
+    tempo: document.getElementById('newTempo').value.trim(),
+    verses: [
+      { type:'Verse 1', lines:[{chord:'',lyric:''}] },
+      { type:'Chorus',  lines:[{chord:'',lyric:''}] }
+    ]
+  });
+  saveSongs(songs);
+  activeSongIdx = songs.length - 1;
+  closeAddModal();
+  renderTabs();
+  loadSongIntoEditor(activeSongIdx);
+  setStatus(`✦ "${title}" added! Fill in lyrics and chords below.`);
+}
+
+// ── Delete Song ───────────────────────────────────────
+function deleteSong(idx) {
+  if (!confirm(`Delete "${songs[idx].title}"?\n\nThis cannot be undone.`)) return;
+  const name = songs[idx].title;
+  songs.splice(idx, 1);
+  songs.forEach((s,i) => s.id = i+1);
+  saveSongs(songs);
+  activeSongIdx = Math.min(activeSongIdx, songs.length-1);
+  renderTabs();
+  loadSongIntoEditor(activeSongIdx);
+  setStatus(`"${name}" deleted.`);
+}
+
+// ── Editor ────────────────────────────────────────────
 function loadSongIntoEditor(idx) {
-  const song = songs[idx];
-  document.getElementById('fTitle').value = song.title || '';
-  document.getElementById('fAuthor').value = song.author || '';
-  document.getElementById('fTime').value = song.timeSignature || '4/4';
-  document.getElementById('fTempo').value = song.tempo || '';
-  editingVerses = JSON.parse(JSON.stringify(song.verses || []));
+  const s = songs[idx];
+  document.getElementById('fTitle').value  = s.title || '';
+  document.getElementById('fAuthor').value = s.author || '';
+  document.getElementById('fTime').value   = s.timeSignature || '4/4';
+  document.getElementById('fTempo').value  = s.tempo || '';
+  editingVerses = JSON.parse(JSON.stringify(s.verses || []));
   renderVersesEditor();
   updatePreview();
   setStatus('');
 }
 
-// ── Verses Editor ──────────────────────────────────────
-const VERSE_TYPES = ['Verse 1','Verse 2','Verse 3','Pre-Chorus','Chorus','Bridge','Outro','Intro','Tag'];
+function collectCurrentEdits() {
+  if (!songs[activeSongIdx]) return;
+  songs[activeSongIdx].title         = document.getElementById('fTitle').value.trim()  || songs[activeSongIdx].title;
+  songs[activeSongIdx].author        = document.getElementById('fAuthor').value.trim();
+  songs[activeSongIdx].timeSignature = document.getElementById('fTime').value;
+  songs[activeSongIdx].tempo         = document.getElementById('fTempo').value.trim();
+  songs[activeSongIdx].verses        = JSON.parse(JSON.stringify(editingVerses));
+}
+
+const VERSE_TYPES = ['Intro','Verse 1','Verse 2','Verse 3','Pre-Chorus','Chorus','Bridge','Outro','Tag'];
 
 function renderVersesEditor() {
-  const container = document.getElementById('versesEditor');
-  container.innerHTML = editingVerses.map((verse, vi) => `
-    <div class="verse-editor" id="verseEditor-${vi}">
+  document.getElementById('versesEditor').innerHTML = editingVerses.map((verse,vi) => `
+    <div class="verse-editor">
       <div class="verse-editor-header">
-        <select class="verse-type-select" onchange="updateVerseType(${vi}, this.value)">
-          ${VERSE_TYPES.map(t => `<option${verse.type === t ? ' selected' : ''}>${t}</option>`).join('')}
-          <option${!VERSE_TYPES.includes(verse.type) ? ' selected' : ''} value="${verse.type}">${verse.type}</option>
+        <select class="verse-type-select" onchange="updateVerseType(${vi},this.value)">
+          ${VERSE_TYPES.map(t=>`<option${verse.type===t?' selected':''}>${t}</option>`).join('')}
         </select>
-        <button class="remove-verse-btn" onclick="removeVerse(${vi})">✕ Remove</button>
+        <button class="remove-verse-btn" onclick="removeVerse(${vi})">✕ Remove Section</button>
       </div>
-      <div class="lines-editor" id="linesEditor-${vi}">
-        ${renderLines(verse.lines || [], vi)}
-      </div>
+      <div class="lines-editor" id="LE-${vi}">${renderLines(verse.lines||[],vi)}</div>
       <button class="add-line-btn" onclick="addLine(${vi})">+ Add Line</button>
-    </div>
-  `).join('');
+    </div>`).join('');
 }
 
 function renderLines(lines, vi) {
-  return lines.map((line, li) => `
-    <div class="line-row" id="lineRow-${vi}-${li}">
+  return lines.map((line,li) => `
+    <div class="line-row">
       <div>
         <label>Chords</label>
-        <input class="chord-input" type="text"
-          value="${escapeAttr(line.chord || '')}"
+        <input class="chord-input" type="text" value="${esc(line.chord||'')}"
           placeholder="e.g. G   D   Em7   C"
-          oninput="updateLine(${vi},${li},'chord',this.value)"
-          spellcheck="false">
+          oninput="updateLine(${vi},${li},'chord',this.value)" spellcheck="false">
       </div>
       <div>
         <label>Lyrics</label>
-        <input class="lyric-input" type="text"
-          value="${escapeAttr(line.lyric || '')}"
+        <input class="lyric-input" type="text" value="${esc(line.lyric||'')}"
           placeholder="Type lyrics here..."
           oninput="updateLine(${vi},${li},'lyric',this.value)">
       </div>
-      <button class="remove-line-btn" onclick="removeLine(${vi},${li})" title="Remove line">✕</button>
-    </div>
-  `).join('');
+      <button class="remove-line-btn" onclick="removeLine(${vi},${li})" title="Remove">✕</button>
+    </div>`).join('');
 }
 
-function escapeAttr(str) {
-  return String(str).replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+function updateVerseType(vi,v){ editingVerses[vi].type=v; updatePreview(); }
+function updateLine(vi,li,f,v){ editingVerses[vi].lines[li][f]=v; updatePreview(); }
+function addVerse(){ editingVerses.push({type:'Verse',lines:[{chord:'',lyric:''}]}); renderVersesEditor(); updatePreview(); }
+function removeVerse(vi){
+  if(editingVerses.length<=1){setStatus('Must have at least one section.',true);return;}
+  editingVerses.splice(vi,1); renderVersesEditor(); updatePreview();
 }
-
-function updateVerseType(vi, val) {
-  editingVerses[vi].type = val;
+function addLine(vi){
+  editingVerses[vi].lines.push({chord:'',lyric:''});
+  document.getElementById(`LE-${vi}`).innerHTML = renderLines(editingVerses[vi].lines,vi);
   updatePreview();
 }
-
-function updateLine(vi, li, field, val) {
-  editingVerses[vi].lines[li][field] = val;
+function removeLine(vi,li){
+  if(editingVerses[vi].lines.length<=1){setStatus('Must have at least one line.',true);return;}
+  editingVerses[vi].lines.splice(li,1);
+  document.getElementById(`LE-${vi}`).innerHTML = renderLines(editingVerses[vi].lines,vi);
   updatePreview();
 }
-
-function addVerse() {
-  editingVerses.push({ type: 'Verse', lines: [{ chord:'', lyric:'' }] });
-  renderVersesEditor();
-  updatePreview();
-}
-
-function removeVerse(vi) {
-  if (editingVerses.length <= 1) { setStatus('Must have at least one section.', true); return; }
-  editingVerses.splice(vi, 1);
-  renderVersesEditor();
-  updatePreview();
-}
-
-function addLine(vi) {
-  editingVerses[vi].lines.push({ chord:'', lyric:'' });
-  const container = document.getElementById(`linesEditor-${vi}`);
-  const newLi = editingVerses[vi].lines.length - 1;
-  const div = document.createElement('div');
-  div.innerHTML = renderLines([{ chord:'', lyric:'' }], vi).replace(/lineRow-${vi}-0/,`lineRow-${vi}-${newLi}`);
-  // Re-render all lines for simplicity
-  container.innerHTML = renderLines(editingVerses[vi].lines, vi);
-  updatePreview();
-}
-
-function removeLine(vi, li) {
-  if (editingVerses[vi].lines.length <= 1) { setStatus('Must have at least one line.', true); return; }
-  editingVerses[vi].lines.splice(li, 1);
-  const container = document.getElementById(`linesEditor-${vi}`);
-  container.innerHTML = renderLines(editingVerses[vi].lines, vi);
-  updatePreview();
-}
-
-// ── Preview ────────────────────────────────────────────
-function updatePreview() {
-  document.getElementById('previewContent').innerHTML = renderSongContent(editingVerses, 0);
-}
+function updatePreview(){ document.getElementById('previewContent').innerHTML = renderSongContent(editingVerses,0); }
 
 // ── Save ──────────────────────────────────────────────
-function saveSong() {
-  songs[activeSongIdx].title = document.getElementById('fTitle').value.trim() || songs[activeSongIdx].title;
-  songs[activeSongIdx].author = document.getElementById('fAuthor').value.trim();
-  songs[activeSongIdx].timeSignature = document.getElementById('fTime').value;
-  songs[activeSongIdx].tempo = document.getElementById('fTempo').value.trim();
-  songs[activeSongIdx].verses = JSON.parse(JSON.stringify(editingVerses));
+function saveSong(){
+  collectCurrentEdits();
   saveSongs(songs);
   renderTabs();
-  setStatus('✦ Changes saved successfully!', false);
-  setTimeout(() => setStatus(''), 4000);
+  setStatus('✦ Saved! Click "Export utils.js" then redeploy to Netlify to sync all devices.');
+  setTimeout(()=>setStatus(''),7000);
+}
+function revertSong(){ loadSongIntoEditor(activeSongIdx); setStatus('Reverted.'); setTimeout(()=>setStatus(''),3000); }
+
+// ── EXPORT utils.js ───────────────────────────────────
+function exportUtils(){
+  collectCurrentEdits();
+  saveSongs(songs);
+
+  const songsJson = JSON.stringify(songs, null, 2);
+
+  const content = `// ═══════════════════════════════════════════════════════
+//  IEMELIF Songbook — Shared Utilities
+//  Exported from Admin Panel: ${new Date().toLocaleString()}
+// ═══════════════════════════════════════════════════════
+
+// ── Chord Transposition Engine ───────────────────────
+const NOTES = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+const NOTE_ALT = {'Db':'C#','Eb':'D#','Fb':'E','Gb':'F#','Ab':'G#','Bb':'A#','Cb':'B'};
+
+function noteToIndex(note) {
+  const normalized = NOTE_ALT[note] || note;
+  return NOTES.indexOf(normalized);
 }
 
-function revertSong() {
-  loadSongIntoEditor(activeSongIdx);
-  setStatus('Reverted to last saved version.', false);
-  setTimeout(() => setStatus(''), 3000);
+function transposeNote(note, semitones) {
+  const idx = noteToIndex(note);
+  if (idx === -1) return note;
+  const newIdx = ((idx + semitones) % 12 + 12) % 12;
+  return NOTES[newIdx];
 }
 
-function setStatus(msg, isErr = false) {
+function transposeChord(chord, semitones) {
+  if (!chord || semitones === 0) return chord;
+  return chord.replace(/[A-G][#b]?/g, (match) => transposeNote(match, semitones));
+}
+
+function transposeLine(line, semitones) {
+  if (!line || semitones === 0) return line;
+  return line.replace(/\\b[A-G][#b]?(?:maj|min|m|sus|dim|aug|add|dom|M)?[0-9]?(?:\\/[A-G][#b]?)?\\b/g,
+    (chord) => transposeChord(chord, semitones));
+}
+
+// ── Song Data Storage ─────────────────────────────────
+const STORAGE_KEY = 'iemelif_songbook_v1';
+
+function loadSongs() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : getDefaultSongs();
+  } catch(e) {
+    return getDefaultSongs();
+  }
+}
+
+function saveSongs(songs) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(songs));
+}
+
+// ── DEFAULT SONGS (baked in from last export) ─────────
+function getDefaultSongs() {
+  return ${songsJson};
+}
+
+// ── Render Song Lines ─────────────────────────────────
+function renderSongContent(verses, semitones = 0) {
+  let html = '';
+  verses.forEach(verse => {
+    html += \`<div class="verse-block"><div class="verse-label">\${verse.type}</div>\`;
+    verse.lines.forEach(line => {
+      const tc = transposeLine(line.chord, semitones);
+      html += \`<div class="song-line">
+        <div class="chord-row">\${tc && tc.trim() ? tc : '&nbsp;'}</div>
+        <div class="lyric-row">\${line.lyric || '&nbsp;'}</div>
+      </div>\`;
+    });
+    html += '</div>';
+  });
+  return html;
+}
+
+// ── Key Display ───────────────────────────────────────
+const KEY_NAMES = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+function getTransposedKeyLabel(baseKey, semitones) {
+  if (!baseKey) return '';
+  const idx = KEY_NAMES.indexOf(baseKey);
+  if (idx === -1) return baseKey;
+  return KEY_NAMES[((idx + semitones) % 12 + 12) % 12];
+}
+`;
+
+  const blob = new Blob([content], { type:'application/javascript' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url; a.download = 'utils.js';
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+
+  setStatus('✦ utils.js downloaded! Put it in your js/ folder, then redeploy to Netlify.');
+  setTimeout(()=>setStatus(''), 9000);
+}
+
+function setStatus(msg, isErr=false){
   const el = document.getElementById('saveStatus');
   el.textContent = msg;
-  el.className = 'save-status' + (isErr ? ' err' : msg ? ' ok' : '');
+  el.className = 'save-status' + (isErr?' err': msg?' ok':'');
 }
 </script>
 </body>

@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Book Mode — IEMELIF Songbook</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+/* ── BOOK MODE ──────────────────────────────────────── */
+body { overflow:hidden; height:100vh; }
+
+.book-wrapper {
+  display:flex; flex-direction:column;
+  height: calc(100vh - 90px); /* below header */
+  position:relative; overflow:hidden;
+}
+
+/* Page slider */
+.pages-track {
+  display:flex;
+  flex:1; overflow:hidden;
+  position:relative;
+}
+.book-page {
+  min-width:100%; height:100%;
+  overflow-y:auto; overflow-x:hidden;
+  padding:24px 20px 80px;
+  transition:transform 0.42s cubic-bezier(0.4,0,0.2,1);
+  will-change:transform;
+  scroll-behavior:smooth;
+}
+.book-page::-webkit-scrollbar{ width:4px; }
+.book-page::-webkit-scrollbar-thumb{ background:rgba(212,160,23,0.3); border-radius:4px; }
+
+/* Song display inside book */
+.book-song-title {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.8rem,5vw,2.6rem);
+  font-weight:900; font-style:italic;
+  background:linear-gradient(135deg, var(--gold-shine), #fff, var(--pink-light));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-clip:text; line-height:1.1;
+  margin-bottom:6px;
+}
+.book-song-author {
+  font-family:'Cormorant Garamond',serif; font-style:italic;
+  font-size:1rem; color:rgba(255,255,255,0.60); margin-bottom:16px;
+}
+.book-chips {
+  display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px;
+}
+.chip {
+  font-family:'Lato',sans-serif; font-size:0.72rem;
+  padding:4px 12px; border-radius:30px;
+  background:rgba(255,255,255,0.10); border:1px solid rgba(255,255,255,0.18);
+  color:rgba(255,255,255,0.70);
+}
+.chip.key { border-color:rgba(212,160,23,0.4); color:var(--gold-shine); }
+
+.song-content-book {
+  background:rgba(255,255,255,0.09);
+  border:1px solid rgba(255,255,255,0.16);
+  border-radius:18px; padding:28px 30px;
+  margin-bottom:16px;
+}
+.verse-block { margin-bottom:26px; }
+.verse-block:last-child{ margin-bottom:0; }
+.verse-label {
+  font-family:'Cinzel',serif; font-size:0.68rem; letter-spacing:0.16em;
+  color:var(--gold-mid); text-transform:uppercase;
+  margin-bottom:10px; padding-bottom:5px;
+  border-bottom:1px solid rgba(212,160,23,0.22);
+}
+.song-line{ margin-bottom:2px; }
+.chord-row {
+  font-family:'Lato',sans-serif; font-size:0.82rem; font-weight:700;
+  color:var(--gold-shine); white-space:pre; min-height:18px; padding:1px 0;
+}
+.lyric-row {
+  font-family:'Cormorant Garamond',serif; font-size:1.1rem;
+  color:rgba(255,255,255,0.88); white-space:pre-wrap;
+  line-height:1.4; padding:1px 0; margin-bottom:5px;
+}
+
+/* ── Book Controls Bar ──────────────────────────────── */
+.book-controls {
+  position:fixed; bottom:0; left:0; right:0; z-index:200;
+  padding:12px 20px;
+  background:rgba(61,0,32,0.75);
+  backdrop-filter:blur(20px);
+  border-top:1px solid rgba(212,160,23,0.25);
+  display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+  justify-content:space-between;
+}
+.bc-left, .bc-right { display:flex; align-items:center; gap:8px; }
+
+.nav-btn {
+  display:flex; align-items:center; gap:6px;
+  padding:9px 20px; border-radius:30px;
+  border:1px solid rgba(212,160,23,0.35);
+  background:rgba(212,160,23,0.15); color:var(--gold-shine);
+  cursor:pointer; font-family:'Cinzel',serif;
+  font-size:0.72rem; letter-spacing:0.08em;
+  transition:all 0.25s ease; user-select:none;
+}
+.nav-btn:hover:not(:disabled) { background:rgba(212,160,23,0.30); }
+.nav-btn:disabled { opacity:0.3; cursor:default; }
+.nav-btn.pink {
+  border-color:rgba(194,24,91,0.35);
+  background:rgba(194,24,91,0.15); color:var(--pink-light);
+}
+.nav-btn.pink:hover:not(:disabled) { background:rgba(194,24,91,0.28); }
+
+.page-indicator {
+  font-family:'Cinzel',serif; font-size:0.78rem; letter-spacing:0.1em;
+  color:rgba(255,255,255,0.65); white-space:nowrap;
+}
+.page-dots {
+  display:flex; gap:6px; align-items:center;
+}
+.dot {
+  width:6px;height:6px;border-radius:50%;
+  background:rgba(255,255,255,0.25);
+  transition:all 0.3s ease; cursor:pointer;
+}
+.dot.active {
+  width:18px; border-radius:3px;
+  background:linear-gradient(90deg,var(--gold-mid),var(--gold-shine));
+}
+
+/* Transpose in book mode */
+.t-group {
+  display:flex; align-items:center; gap:6px;
+}
+.t-label {
+  font-family:'Cinzel',serif; font-size:0.68rem; letter-spacing:0.08em;
+  color:rgba(255,255,255,0.55);
+}
+.t-mini {
+  width:28px;height:28px; border-radius:50%;
+  border:1px solid rgba(212,160,23,0.40);
+  background:rgba(212,160,23,0.14); color:var(--gold-shine);
+  cursor:pointer; font-size:0.9rem; font-weight:bold;
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.2s ease;
+}
+.t-mini:hover{ background:rgba(212,160,23,0.30); transform:scale(1.1); }
+.t-val {
+  font-family:'Cinzel',serif; font-size:0.8rem; color:var(--gold-shine);
+  min-width:28px; text-align:center;
+}
+
+/* Swipe hint */
+.swipe-hint {
+  position:fixed; bottom:72px; left:50%; transform:translateX(-50%);
+  background:rgba(61,0,32,0.80); border:1px solid rgba(212,160,23,0.30);
+  border-radius:30px; padding:8px 20px;
+  font-family:'Cormorant Garamond',serif; font-style:italic;
+  font-size:0.85rem; color:rgba(255,255,255,0.70);
+  animation:fadeHint 3s ease forwards;
+  pointer-events:none; z-index:300;
+}
+@keyframes fadeHint {
+  0%{opacity:0;transform:translateX(-50%) translateY(10px);}
+  20%{opacity:1;transform:translateX(-50%) translateY(0);}
+  70%{opacity:1;}
+  100%{opacity:0;}
+}
+
+/* Page flip animation */
+@keyframes pageFlipIn {
+  from { opacity:0; transform:translateX(60px) scale(0.97); }
+  to   { opacity:1; transform:translateX(0) scale(1); }
+}
+.page-enter { animation:pageFlipIn 0.38s ease forwards; }
+
+@media(max-width:600px){
+  .bc-left .t-label { display:none; }
+  .page-indicator { display:none; }
+  .song-content-book { padding:20px 16px; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-shapes">
+  <div class="shape"></div><div class="shape"></div>
+  <div class="shape"></div><div class="shape"></div>
+</div>
+
+<header>
+  <div class="container">
+    <nav class="glass">
+      <a class="logo" href="index.html">
+        <span class="logo-cross">✞</span>
+        <span>IEMELIF Songbook</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="book.html" class="active">📖 Book Mode</a>
+        <a href="admin.html">⚙ Admin</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<div class="book-wrapper" id="bookWrapper">
+  <div class="pages-track" id="pagesTrack">
+    <!-- Pages injected by JS -->
+  </div>
+</div>
+
+<div class="book-controls" id="bookControls">
+  <div class="bc-left">
+    <div class="t-group">
+      <span class="t-label">Transpose</span>
+      <button class="t-mini" id="bTDown">♭</button>
+      <span class="t-val" id="bTVal">0</span>
+      <button class="t-mini" id="bTUp">♯</button>
+    </div>
+    <button class="nav-btn pink" id="bReset" style="padding:7px 14px;font-size:0.68rem;">Reset</button>
+  </div>
+
+  <div class="page-dots" id="pageDots"></div>
+
+  <div class="bc-right">
+    <span class="page-indicator" id="pageIndicator">1 / 4</span>
+    <button class="nav-btn" id="bPrev" disabled>← Prev</button>
+    <button class="nav-btn" id="bNext">Next →</button>
+  </div>
+</div>
+
+<script src="js/utils.js"></script>
+<script>
+let songs = [];
+let currentIdx = 0;
+let semitones = 0;
+let touchStartX = 0;
+let touchStartY = 0;
+let isDragging = false;
+
+function detectBaseKey(song) {
+  if (!song.verses || !song.verses[0]) return 'G';
+  const firstChordLine = song.verses[0].lines.find(l => l.chord && l.chord.trim());
+  if (!firstChordLine) return 'G';
+  const match = firstChordLine.chord.match(/[A-G][#b]?/);
+  return match ? match[0] : 'G';
+}
+
+function buildPageHTML(song, idx) {
+  const baseKey = detectBaseKey(song);
+  const keyLabel = getTransposedKeyLabel(baseKey, semitones);
+  return `
+    <div class="book-song-title">${song.title}</div>
+    <div class="book-song-author">${song.author || ''}</div>
+    <div class="book-chips">
+      <span class="chip key">🎼 Key: ${keyLabel}</span>
+      ${song.timeSignature ? `<span class="chip">${song.timeSignature}</span>` : ''}
+      ${song.tempo ? `<span class="chip">♩ ${song.tempo}</span>` : ''}
+    </div>
+    <div class="song-content-book">
+      ${renderSongContent(song.verses, semitones)}
+    </div>
+  `;
+}
+
+function renderAllPages() {
+  const track = document.getElementById('pagesTrack');
+  track.innerHTML = songs.map((song, idx) => {
+    const active = idx === currentIdx;
+    return `<div class="book-page" id="page-${idx}" style="display:${active ? 'block' : 'none'}">
+      ${buildPageHTML(song, idx)}
+    </div>`;
+  }).join('');
+}
+
+function showPage(idx, direction = 1) {
+  if (idx < 0 || idx >= songs.length) return;
+
+  // Hide current
+  const oldPage = document.getElementById(`page-${currentIdx}`);
+  if (oldPage) oldPage.style.display = 'none';
+
+  currentIdx = idx;
+
+  // Show new, scroll to top
+  const newPage = document.getElementById(`page-${currentIdx}`);
+  if (newPage) {
+    // Rebuild content for current semitones
+    newPage.innerHTML = buildPageHTML(songs[currentIdx], currentIdx);
+    newPage.style.display = 'block';
+    newPage.classList.remove('page-enter');
+    void newPage.offsetWidth; // reflow
+    newPage.classList.add('page-enter');
+    newPage.scrollTop = 0;
+  }
+
+  updateControls();
+}
+
+function refreshCurrentPage() {
+  const page = document.getElementById(`page-${currentIdx}`);
+  if (page) {
+    page.innerHTML = buildPageHTML(songs[currentIdx], currentIdx);
+  }
+  updateControls();
+}
+
+function updateControls() {
+  document.getElementById('bPrev').disabled = currentIdx === 0;
+  document.getElementById('bNext').disabled = currentIdx === songs.length - 1;
+  document.getElementById('pageIndicator').textContent = `${currentIdx + 1} / ${songs.length}`;
+  document.getElementById('bTVal').textContent = (semitones >= 0 ? '+' : '') + semitones;
+
+  // Dots
+  const dots = document.querySelectorAll('.dot');
+  dots.forEach((d, i) => d.classList.toggle('active', i === currentIdx));
+}
+
+function buildDots() {
+  const dotsEl = document.getElementById('pageDots');
+  dotsEl.innerHTML = songs.map((_, i) =>
+    `<div class="dot${i === currentIdx ? ' active' : ''}" data-idx="${i}"></div>`
+  ).join('');
+  dotsEl.addEventListener('click', e => {
+    const idx = parseInt(e.target.dataset.idx, 10);
+    if (!isNaN(idx)) showPage(idx);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  songs = loadSongs();
+  if (!songs.length) {
+    document.getElementById('pagesTrack').innerHTML =
+      '<div style="padding:60px 20px;text-align:center;color:rgba(255,255,255,0.5);width:100%;">No songs available. Please ask the admin to add songs.</div>';
+    return;
+  }
+
+  renderAllPages();
+  buildDots();
+  updateControls();
+
+  // Show swipe hint
+  const hint = document.createElement('div');
+  hint.className = 'swipe-hint';
+  hint.textContent = '← Swipe left or right to change songs →';
+  document.body.appendChild(hint);
+  setTimeout(() => hint.remove(), 3500);
+
+  // Controls
+  document.getElementById('bPrev').addEventListener('click', () => showPage(currentIdx - 1));
+  document.getElementById('bNext').addEventListener('click', () => showPage(currentIdx + 1));
+  document.getElementById('bReset').addEventListener('click', () => { semitones = 0; refreshCurrentPage(); });
+  document.getElementById('bTUp').addEventListener('click', () => { semitones++; refreshCurrentPage(); });
+  document.getElementById('bTDown').addEventListener('click', () => { semitones--; refreshCurrentPage(); });
+
+  // Keyboard navigation
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') showPage(currentIdx + 1);
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') showPage(currentIdx - 1);
+  });
+
+  // Touch swipe
+  const track = document.getElementById('bookWrapper');
+  track.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    isDragging = true;
+  }, { passive: true });
+
+  track.addEventListener('touchend', e => {
+    if (!isDragging) return;
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    // Only horizontal swipe (ignore scroll)
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
+      if (dx < 0) showPage(currentIdx + 1); // swipe left = next
+      else showPage(currentIdx - 1);         // swipe right = prev
+    }
+    isDragging = false;
+  }, { passive: true });
+
+  // Mouse drag (desktop)
+  track.addEventListener('mousedown', e => {
+    touchStartX = e.clientX; isDragging = true;
+  });
+  track.addEventListener('mouseup', e => {
+    if (!isDragging) return;
+    const dx = e.clientX - touchStartX;
+    if (Math.abs(dx) > 80) {
+      if (dx < 0) showPage(currentIdx + 1);
+      else showPage(currentIdx - 1);
+    }
+    isDragging = false;
+  });
+  track.addEventListener('mouseleave', () => { isDragging = false; });
+});
+</script>
+</body>
+</html>

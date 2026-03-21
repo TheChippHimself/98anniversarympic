@@ -393,6 +393,90 @@ function getDefaultSongs() {
   },
   {
     "id": 3,
+    "title": "Gintong Panahon",
+    "author": "Unknown",
+    "tempo": "♩ = 60",
+    "timeSignature": "4/4",
+    "verses": [
+      {
+        "type": "Verse 1",
+        "lines": [
+          {
+            "chord": "                         D                           F#m",
+            "lyric": "Sa bawat oras at sandali"
+          },
+          {
+            "chord": "                   Bm                  F#m",
+            "lyric": "Magpupuri sayo lagi"
+          },
+          {
+            "chord": "                    G                            D/F#",
+            "lyric": "Pagsamaba'y mananatili"
+          },
+          {
+            "chord": "         Em                           A",
+            "lyric": "Sayo ang luwalhati"
+          }
+        ]
+      },
+      {
+        "type": "Verse 1",
+        "lines": [
+          {
+            "chord": "                         D                           F#m",
+            "lyric": "Sa bawat oras at sandali"
+          },
+          {
+            "chord": "                   Bm                  F#m",
+            "lyric": "Magpupuri sayo lagi"
+          },
+          {
+            "chord": "                    G                            D/F#",
+            "lyric": "Pagsamaba'y mananatili"
+          },
+          {
+            "chord": "         Em                           A",
+            "lyric": "Sayo ang luwalhati"
+          }
+        ]
+      },
+      {
+        "type": "Chorus",
+        "lines": [
+          {
+            "chord": "                         Bm         A         G                        D",
+            "lyric": "Ako'y maglilingkod sayo Panginoon"
+          },
+          {
+            "chord": "               Bm                      A    ",
+            "lyric": "Susundin ang kalooban mo"
+          },
+          {
+            "chord": "          G                          A",
+            "lyric": "Sa habang panahon"
+          },
+          {
+            "chord": "       Bm                      A",
+            "lyric": "Iaalay maging buhay"
+          },
+          {
+            "chord": "        G                  D/F#",
+            "lyric": "Sa'yo Panginoon"
+          },
+          {
+            "chord": "       Em                               F#m",
+            "lyric": "Upang ang bawat sandali"
+          },
+          {
+            "chord": "        G                  A                       D",
+            "lyric": "Maging Gintong Panahon"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 4,
     "title": "Kapanatagang Maligaya",
     "author": "Joseph Knapp",
     "tempo": "♩ = 42",
@@ -488,90 +572,6 @@ function getDefaultSongs() {
           {
             "chord": "                               Em         A                D",
             "lyric": "sa Diyos na ating         Iniibig"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "id": 4,
-    "title": "Gintong Panahon",
-    "author": "Unknown",
-    "tempo": "♩ = 60",
-    "timeSignature": "4/4",
-    "verses": [
-      {
-        "type": "Verse 1",
-        "lines": [
-          {
-            "chord": "                         D                           F#m",
-            "lyric": "Sa bawat oras at sandali"
-          },
-          {
-            "chord": "                   Bm                  F#m",
-            "lyric": "Magpupuri sayo lagi"
-          },
-          {
-            "chord": "                    G                            D/F#",
-            "lyric": "Pagsamaba'y mananatili"
-          },
-          {
-            "chord": "         Em                           A",
-            "lyric": "Sayo ang luwalhati"
-          }
-        ]
-      },
-      {
-        "type": "Verse 1",
-        "lines": [
-          {
-            "chord": "                         D                           F#m",
-            "lyric": "Sa bawat oras at sandali"
-          },
-          {
-            "chord": "                   Bm                  F#m",
-            "lyric": "Magpupuri sayo lagi"
-          },
-          {
-            "chord": "                    G                            D/F#",
-            "lyric": "Pagsamaba'y mananatili"
-          },
-          {
-            "chord": "         Em                           A",
-            "lyric": "Sayo ang luwalhati"
-          }
-        ]
-      },
-      {
-        "type": "Chorus",
-        "lines": [
-          {
-            "chord": "                         Bm         A         G                        D",
-            "lyric": "Ako'y maglilingkod sayo Panginoon"
-          },
-          {
-            "chord": "               Bm                      A    ",
-            "lyric": "Susundin ang kalooban mo"
-          },
-          {
-            "chord": "          G                          A",
-            "lyric": "Sa habang panahon"
-          },
-          {
-            "chord": "       Bm                      A",
-            "lyric": "Iaalay maging buhay"
-          },
-          {
-            "chord": "        G                  D/F#",
-            "lyric": "Sa'yo Panginoon"
-          },
-          {
-            "chord": "       Em                               F#m",
-            "lyric": "Upang ang bawat sandali"
-          },
-          {
-            "chord": "        G                  A                       D",
-            "lyric": "Maging Gintong Panahon"
           }
         ]
       }

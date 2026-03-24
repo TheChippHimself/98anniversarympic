@@ -239,22 +239,13 @@ let touchStartX = 0;
 let touchStartY = 0;
 let isDragging = false;
 
-function detectBaseKey(song) {
-  if (!song.verses || !song.verses[0]) return 'G';
-  const firstChordLine = song.verses[0].lines.find(l => l.chord && l.chord.trim());
-  if (!firstChordLine) return 'G';
-  const match = firstChordLine.chord.match(/[A-G][#b]?/);
-  return match ? match[0] : 'G';
-}
-
 function buildPageHTML(song, idx) {
-  const baseKey = detectBaseKey(song);
-  const keyLabel = getTransposedKeyLabel(baseKey, semitones);
+  const keyLabel = song.baseKey ? getTransposedKeyLabel(song.baseKey, semitones) : '';
   return `
     <div class="book-song-title">${song.title}</div>
     <div class="book-song-author">${song.author || ''}</div>
     <div class="book-chips">
-      <span class="chip key">🎼 Key: ${keyLabel}</span>
+      ${keyLabel ? `<span class="chip key">🎼 Key: ${keyLabel}</span>` : ''}
       ${song.timeSignature ? `<span class="chip">${song.timeSignature}</span>` : ''}
       ${song.tempo ? `<span class="chip">♩ ${song.tempo}</span>` : ''}
     </div>

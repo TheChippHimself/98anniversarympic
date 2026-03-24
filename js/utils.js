@@ -1,6 +1,6 @@
 // ═══════════════════════════════════════════════════════
 //  IEMELIF Songbook — Shared Utilities
-//  Exported from Admin Panel: 3/13/2026, 9:03:17 PM
+//  Exported from Admin Panel: 3/24/2026, 8:11:23 PM
 // ═══════════════════════════════════════════════════════
 
 // ── Chord Transposition Engine ───────────────────────
@@ -55,24 +55,25 @@ function getDefaultSongs() {
     "author": "BDACKLEY",
     "tempo": "♩ = 115",
     "timeSignature": "4/4",
+    "baseKey": "E",
     "verses": [
       {
         "type": "Verse 1",
         "lines": [
           {
-            "chord": "                G                                                               G",
+            "chord": "                E                                                               E",
             "lyric": "Kay Ligaya kung ako'y Naglilingkod"
           },
           {
-            "chord": "                C                        D         G",
+            "chord": "                A                        B         E",
             "lyric": "Sa Hari kong Manunubos"
           },
           {
-            "chord": "                G                                                G",
+            "chord": "                E                                               E",
             "lyric": "Kapayapaa't Kagalaka'y Lubos"
           },
           {
-            "chord": "                      Am        D              G",
+            "chord": "                      F#m        B              E",
             "lyric": "Kung ako'y Naglilingkod"
           }
         ]
@@ -81,19 +82,19 @@ function getDefaultSongs() {
         "type": "Chorus",
         "lines": [
           {
-            "chord": "                    G           G/B            C",
+            "chord": "                    E           E/G#m            A",
             "lyric": "Kung ako'y Naglilingkod"
           },
           {
-            "chord": "                      D                                 G",
+            "chord": "                      B             B/D#            E",
             "lyric": "Ang Buong kaya'y Handog"
           },
           {
-            "chord": "                      G          Bm      C",
+            "chord": "                      E          G#m      A    G#m",
             "lyric": "Ang Tuwa'y di Matatapos"
           },
           {
-            "chord": "Am                        G            D               G",
+            "chord": "F#m                        E            B               E",
             "lyric": "Kung sa Kanya'y Maglingkod"
           }
         ]
@@ -102,19 +103,19 @@ function getDefaultSongs() {
         "type": "Verse 2",
         "lines": [
           {
-            "chord": "                    G                                                       G",
+            "chord": "                    E                                                       E",
             "lyric": "Ang Tinatangkilik ko ay Dadalhin"
           },
           {
-            "chord": "                  C                  D              G",
+            "chord": "                  A                  B              E",
             "lyric": "Kay Jesus na Aking Giliw"
           },
           {
-            "chord": "                     G                                                 G",
+            "chord": "                     E                                                 E",
             "lyric": "May Galak, Kapayapaan, at Aliw"
           },
           {
-            "chord": "                Am                 D            G",
+            "chord": "                F#m                 B            E",
             "lyric": "Na Walang Pagmamaliw"
           }
         ]
@@ -123,19 +124,19 @@ function getDefaultSongs() {
         "type": "Verse 3",
         "lines": [
           {
-            "chord": "                     G                                                               G",
+            "chord": "                     E                                                               E",
             "lyric": "Ang Patnubay ng Kanyang mga Kamay"
           },
           {
-            "chord": "                   C                              D   G",
+            "chord": "                   A                              B   E",
             "lyric": "Ang sa Aki'y Nagbabantay"
           },
           {
-            "chord": "            G                                                       G",
+            "chord": "            E                                                       E",
             "lyric": "at Ako'y Panatag sa Paglalakbay"
           },
           {
-            "chord": "                   C                 D         G",
+            "chord": "                   F#m                 B         E",
             "lyric": "Kung Siya ang Kaakbay"
           }
         ]
@@ -148,6 +149,7 @@ function getDefaultSongs() {
     "author": "Hope Filipino Worship",
     "tempo": "♩ = 110",
     "timeSignature": "4/4",
+    "baseKey": "D",
     "verses": [
       {
         "type": "Verse 1",
@@ -397,24 +399,25 @@ function getDefaultSongs() {
     "author": "Unknown",
     "tempo": "♩ = 60",
     "timeSignature": "4/4",
+    "baseKey": "A",
     "verses": [
       {
         "type": "Verse 1",
         "lines": [
           {
-            "chord": "                         D                           F#m",
+            "chord": "                         A                           C#m",
             "lyric": "Sa bawat oras at sandali"
           },
           {
-            "chord": "                   Bm                  F#m",
+            "chord": "                   F#m                  C#m",
             "lyric": "Magpupuri sayo lagi"
           },
           {
-            "chord": "                    G                            D/F#",
+            "chord": "                    D                            A/C#",
             "lyric": "Pagsamaba'y mananatili"
           },
           {
-            "chord": "         Em                           A",
+            "chord": "         Bm                           E",
             "lyric": "Sayo ang luwalhati"
           }
         ]
@@ -423,20 +426,20 @@ function getDefaultSongs() {
         "type": "Verse 1",
         "lines": [
           {
-            "chord": "                         D                           F#m",
+            "chord": "                         A                           C#m",
             "lyric": "Sa bawat oras at sandali"
           },
           {
-            "chord": "                   Bm                  F#m",
-            "lyric": "Magpupuri sayo lagi"
+            "chord": "F#m                           C#m",
+            "lyric": "Susunod sayo lagi"
           },
           {
-            "chord": "                    G                            D/F#",
-            "lyric": "Pagsamaba'y mananatili"
+            "chord": "         D                                      A/C#",
+            "lyric": "Salita Mo'y mananatili"
           },
           {
-            "chord": "         Em                           A",
-            "lyric": "Sayo ang luwalhati"
+            "chord": "         Bm                                    E",
+            "lyric": "Sa buhay ko'y Maghahari"
           }
         ]
       },
@@ -444,31 +447,31 @@ function getDefaultSongs() {
         "type": "Chorus",
         "lines": [
           {
-            "chord": "                         Bm         A         G                        D",
+            "chord": "                         F#m         E         D                        A",
             "lyric": "Ako'y maglilingkod sayo Panginoon"
           },
           {
-            "chord": "               Bm                      A    ",
+            "chord": "               F#m                      E    ",
             "lyric": "Susundin ang kalooban mo"
           },
           {
-            "chord": "          G                          A",
+            "chord": "          D                          E",
             "lyric": "Sa habang panahon"
           },
           {
-            "chord": "       Bm                      A",
+            "chord": "       F#m                      E",
             "lyric": "Iaalay maging buhay"
           },
           {
-            "chord": "        G                  D/F#",
+            "chord": "        D                  A/C#",
             "lyric": "Sa'yo Panginoon"
           },
           {
-            "chord": "       Em                               F#m",
+            "chord": "       Bm                              C#m",
             "lyric": "Upang ang bawat sandali"
           },
           {
-            "chord": "        G                  A                       D",
+            "chord": "        D                  E                       A",
             "lyric": "Maging Gintong Panahon"
           }
         ]
@@ -481,6 +484,7 @@ function getDefaultSongs() {
     "author": "Joseph Knapp",
     "tempo": "♩ = 42",
     "timeSignature": "4/4",
+    "baseKey": "D",
     "verses": [
       {
         "type": "Intro",

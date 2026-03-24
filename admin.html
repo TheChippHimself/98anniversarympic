@@ -105,6 +105,7 @@
 
 /* Form */
 .form-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px; }
+.form-row-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; margin-bottom:14px; }
 .form-group label {
   display:block; font-family:'Cinzel',serif; font-size:0.68rem; letter-spacing:0.1em;
   color:rgba(255,255,255,0.52); margin-bottom:6px; text-transform:uppercase;
@@ -119,6 +120,15 @@
   border-color:rgba(212,160,23,0.55); background:rgba(255,255,255,0.13);
 }
 .form-group select option { background:#3d0028; color:white; }
+
+/* Key select highlight */
+#fKey {
+  font-family:'Lato',sans-serif !important;
+  font-weight:700;
+  color:var(--gold-shine) !important;
+  border-color:rgba(212,160,23,0.35) !important;
+}
+#fKey:focus { border-color:rgba(212,160,23,0.70) !important; }
 
 /* Verses */
 .verses-editor { display:flex; flex-direction:column; gap:14px; }
@@ -246,6 +256,7 @@
 
 @media(max-width:600px){
   .form-row { grid-template-columns:1fr; }
+  .form-row-3 { grid-template-columns:1fr; }
   .line-row  { grid-template-columns:1fr; }
   .step-arrow { display:none; }
   .export-steps { flex-direction:column; }
@@ -297,6 +308,15 @@
         <label>Tempo</label>
         <input type="text" id="newTempo" placeholder="e.g. ♩ = 80">
       </div>
+    </div>
+    <div class="form-group">
+      <label>Base Key</label>
+      <select id="newKey" style="font-family:'Lato',sans-serif;font-weight:700;color:var(--gold-shine);border-color:rgba(212,160,23,0.35);">
+        <option value="">— Select Key —</option>
+        <option>C</option><option>C#</option><option>D</option><option>D#</option>
+        <option>E</option><option>F</option><option>F#</option><option>G</option>
+        <option>G#</option><option>A</option><option>A#</option><option>B</option>
+      </select>
     </div>
     <div class="modal-actions">
       <button class="btn btn-glass btn-sm" onclick="closeAddModal()">Cancel</button>
@@ -381,7 +401,7 @@
         <input type="text" id="fAuthor" placeholder="e.g. John Newton">
       </div>
     </div>
-    <div class="form-row">
+    <div class="form-row-3">
       <div class="form-group">
         <label>Time Signature</label>
         <select id="fTime">
@@ -392,6 +412,15 @@
       <div class="form-group">
         <label>Tempo</label>
         <input type="text" id="fTempo" placeholder="e.g. ♩ = 80">
+      </div>
+      <div class="form-group">
+        <label>Base Key ✦</label>
+        <select id="fKey">
+          <option value="">— None —</option>
+          <option>C</option><option>C#</option><option>D</option><option>D#</option>
+          <option>E</option><option>F</option><option>F#</option><option>G</option>
+          <option>G#</option><option>A</option><option>A#</option><option>B</option>
+        </select>
       </div>
     </div>
   </div>
@@ -482,6 +511,7 @@ function switchSong(idx) {
 function openAddModal() {
   ['newTitle','newAuthor','newTempo'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('newTime').value = '4/4';
+  document.getElementById('newKey').value = '';
   document.getElementById('addSongModal').classList.add('open');
   setTimeout(() => document.getElementById('newTitle').focus(), 100);
 }
@@ -503,6 +533,7 @@ function confirmAddSong() {
     author: document.getElementById('newAuthor').value.trim(),
     timeSignature: document.getElementById('newTime').value,
     tempo: document.getElementById('newTempo').value.trim(),
+    baseKey: document.getElementById('newKey').value,
     verses: [
       { type:'Verse 1', lines:[{chord:'',lyric:''}] },
       { type:'Chorus',  lines:[{chord:'',lyric:''}] }
@@ -536,6 +567,7 @@ function loadSongIntoEditor(idx) {
   document.getElementById('fAuthor').value = s.author || '';
   document.getElementById('fTime').value   = s.timeSignature || '4/4';
   document.getElementById('fTempo').value  = s.tempo || '';
+  document.getElementById('fKey').value    = s.baseKey || '';
   editingVerses = JSON.parse(JSON.stringify(s.verses || []));
   renderVersesEditor();
   updatePreview();
@@ -548,6 +580,7 @@ function collectCurrentEdits() {
   songs[activeSongIdx].author        = document.getElementById('fAuthor').value.trim();
   songs[activeSongIdx].timeSignature = document.getElementById('fTime').value;
   songs[activeSongIdx].tempo         = document.getElementById('fTempo').value.trim();
+  songs[activeSongIdx].baseKey       = document.getElementById('fKey').value;
   songs[activeSongIdx].verses        = JSON.parse(JSON.stringify(editingVerses));
 }
 
